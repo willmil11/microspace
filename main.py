@@ -12,6 +12,8 @@ import machine
 
 godmode = False #Set to True for godmode (invincibility)
                 #Set to False for normal mode (not invincibility)
+                
+cheatcodeCounter = 0
 
 def sleep(ms):
     rsleep(ms / 1000)
@@ -188,7 +190,7 @@ while True:
             pass
 
         if obstacles[index2]["x"] < 5 and obstacles[index2]["x"] > -1 and obstacles[index2]["y"] < 5 and obstacles[index2]["y"] > -1:
-            display.set_pixel(obstacles[index2]["x"], obstacles[index2]["y"], 9)
+            display.set_pixel(obstacles[index2]["x"], obstacles[index2]["y"], 5)
         index2 += 1
 
     index += 1
@@ -199,14 +201,28 @@ while True:
     while index2 < totalchunks:
         # Move up with B
         # Move down with A
-        if button_a.was_pressed():
+        ba = button_a.was_pressed()
+        bb = button_b.was_pressed()
+        if ba:
             player["y"] += 1
-        if button_b.was_pressed():
+        if bb:
             player["y"] -= 1
         # If the player goes off the screen, make them wrap around
         if player["y"] > 4:
             player["y"] = 0
         if player["y"] < 0:
             player["y"] = 4
+        if button_a.is_pressed() and button_b.is_pressed():
+            cheatcodeCounter += 1
+            if cheatcodeCounter >= 500:
+                display.clear()
+                display.set_pixel(1, 2, 9)
+                display.set_pixel(2, 2, 9)
+                display.set_pixel(3, 2, 9)
+                sleep(700)
+                
+                #Set godmode to its invert
+                godmode = not godmode
+                cheatcodeCounter = 0
         index2 += 1
         sleep(delay)

@@ -11,3 +11,5 @@ Then to flash the code to the microbit using the micropython environement that y
 ```bash
 uflash main.py
 ```
+## Cheatcode
+Hold A and B long to enter godmode, if you do it again you'll exit godmode.
